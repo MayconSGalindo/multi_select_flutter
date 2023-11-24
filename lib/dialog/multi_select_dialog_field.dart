@@ -106,6 +106,8 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
   /// Reverse the order of the confirm and cancel buttons
   final bool reverseActions;
 
+  final void Function(V)? onMaxSelectionReached;
+
   final AutovalidateMode autovalidateMode;
   final FormFieldValidator<List<V>>? validator;
   final FormFieldSetter<List<V>>? onSaved;
@@ -149,6 +151,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
     this.key,
     this.maxSelectedItems,
     this.reverseActions = false,
+    this.onMaxSelectionReached,
   }) : super(
             key: key,
             onSaved: onSaved,
@@ -190,6 +193,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
                 isDismissible: isDismissible,
                 maxSelectedItems: maxSelectedItems,
                 reverseActions: reverseActions,
+                onMaxSelectionReached: onMaxSelectionReached,
               );
               return _MultiSelectDialogFieldView<V>._withState(field, state);
             });
@@ -230,6 +234,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
   FormFieldState<List<V>>? state;
   final int? maxSelectedItems;
   final bool reverseActions;
+  final void Function(V)? onMaxSelectionReached;
 
   _MultiSelectDialogFieldView({
     required this.items,
@@ -264,6 +269,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
     required this.isDismissible,
     this.maxSelectedItems,
     this.reverseActions = false,
+    this.onMaxSelectionReached,
   });
 
   /// This constructor allows a FormFieldState to be passed in. Called by MultiSelectDialogField.
@@ -301,6 +307,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
         isDismissible = field.isDismissible,
         maxSelectedItems = field.maxSelectedItems,
         reverseActions = field.reverseActions,
+        onMaxSelectionReached = field.onMaxSelectionReached,
         state = state;
 
   @override
