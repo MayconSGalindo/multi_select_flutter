@@ -436,6 +436,7 @@ class __MultiSelectDialogFieldViewState<V>
           },
           maxSelectedItems: widget.maxSelectedItems,
           reverseActions: widget.reverseActions,
+          onMaxSelectionReached: widget.onMaxSelectionReached,
         );
       },
     );
