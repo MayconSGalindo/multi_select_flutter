@@ -84,6 +84,8 @@ class MultiSelectDialog<T> extends StatefulWidget with MultiSelectActions<T> {
   /// Reverse the order of the confirm and cancel buttons
   final bool reverseActions;
 
+  final void Function(T)? onMaxSelectionReached;
+
   MultiSelectDialog({
     required this.items,
     required this.initialValue,
@@ -111,6 +113,7 @@ class MultiSelectDialog<T> extends StatefulWidget with MultiSelectActions<T> {
     this.checkColor,
     this.maxSelectedItems,
     this.reverseActions = false,
+    this.onMaxSelectionReached
   });
 
   @override
@@ -187,6 +190,10 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
             if (widget.onSelectionChanged != null) {
               widget.onSelectionChanged!(_selectedValues);
             }
+          }
+
+          if (checked && !canCheckItem && widget.onMaxSelectionReached != null) {
+            widget.onMaxSelectionReached!(item.value);
           }
         },
       ),
